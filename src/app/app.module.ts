@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+// when you use ng generate component, this component gets automatically imported and added to the module's declarations
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 
 @NgModule({

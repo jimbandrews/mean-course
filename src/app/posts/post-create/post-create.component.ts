@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Post } from '../post.model';
 
 // this decorator turns the class below into something that Angular understands
@@ -21,10 +22,10 @@ export class PostCreateComponent {
   ngOnInit(): void {
   }
 
-  onAddPost() {
+  onAddPost(form: NgForm) {
     const post: Post = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+      title: form.value.title,
+      content: form.value.title
     };
     this.postCreated.emit(post);
   }

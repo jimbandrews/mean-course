@@ -6,16 +6,22 @@
         type="text"
         name="title"
         ngModel
+        required
+        #title="ngModel"
       >
     </mat-form-field>
+    <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
     <mat-form-field>
       <textarea
         matInput
         rows="6"
         name="content"
         ngModel
+        required
+        #content="ngModel"
       ></textarea>
     </mat-form-field>
+    <mat-error *ngIf="content.invalid">Please enter a post title.</mat-error>
     <button
       mat-raised-button
       color="accent"

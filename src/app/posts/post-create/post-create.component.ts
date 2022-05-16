@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 // this decorator turns the class below into something that Angular understands
 // selector creates the html tag that you will use for this component
@@ -11,8 +11,9 @@ import { Component, OnInit } from '@angular/core';
 
 // Creating component class
 export class PostCreateComponent implements OnInit {
-  enteredValue = '';
-  newPost = '';
+  enteredContent = '';
+  enteredTitle = '';
+  @Output() postCreated = new EventEmitter();
 
   constructor() { }
 
@@ -20,7 +21,11 @@ export class PostCreateComponent implements OnInit {
   }
 
   onAddPost() {
-    this.newPost = this.enteredValue;
+    const post = {
+      title: this.enteredTitle,
+      content: this.enteredContent
+    };
+    this.postCreated.emit(post);
   }
 
 }

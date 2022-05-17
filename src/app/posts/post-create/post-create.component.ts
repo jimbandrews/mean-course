@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Post } from '../post.model';
+import { PostsService } from 'src/app/posts.service';
 
 // this decorator turns the class below into something that Angular understands
 // selector creates the html tag that you will use for this component
@@ -15,9 +15,8 @@ import { Post } from '../post.model';
 export class PostCreateComponent {
   enteredContent = '';
   enteredTitle = '';
-  @Output() postCreated = new EventEmitter<Post>();
 
-  constructor() { }
+  constructor(public postsService: PostsService) {}
 
   ngOnInit(): void {
   }
@@ -26,11 +25,7 @@ export class PostCreateComponent {
     if(form.invalid) {
       return;
     }
-    const post: Post = {
-      title: form.value.title,
-      content: form.value.title
-    };
-    this.postCreated.emit(post);
+    this.postsService.addPost(form.value.title, form.value.content);
   }
 
 }

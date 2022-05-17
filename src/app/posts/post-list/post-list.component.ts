@@ -28,4 +28,8 @@ export class PostListComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.postsSub.unsubscribe();
+  }
+
 }

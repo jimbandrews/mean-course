@@ -1,7 +1,11 @@
 // This file will hold the express app and all its features
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+// extracts data from the body of the http request
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -14,6 +18,15 @@ app.use((req, res, next) => {
     "GET, POST, PATCH, DELETE, OPTIONS"
   );
   next();
+});
+
+// handles post requests for the /api/posts endpoint
+app.post("/api/posts", (req, res, next) => {
+  const post = req.body;
+  console.log(post);
+  res.status(201).json({
+    message: "Post added successfully!"
+  });
 });
 
 // the new first arg is the path that we have to send a request to

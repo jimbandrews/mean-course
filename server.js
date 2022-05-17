@@ -1,11 +1,13 @@
 // imports the http package from Node
 const http = require('http');
+const app = require('./backend/app')
 
+const port = process.env.PORT || 3000
+
+app.set('port', port);
 // creates a server and stores it in a constant
-const server = http.createServer((req, res) => {
-  // This will just output the text
-  res.end('This is my first response.');
-});
+// we pass app as an arg so that it will listen for requests
+const server = http.createServer(app);
 
 // activates the server to listen for requests when started
-server.listen(process.env.PORT || 3000);
+server.listen(port);

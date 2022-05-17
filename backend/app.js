@@ -30,6 +30,7 @@ app.post("/api/posts", (req, res, next) => {
 });
 
 // the new first arg is the path that we have to send a request to
+// we can call either app.use or app.get here
 app.use('/api/posts', (req, res, next) => {
   const posts = [
     {

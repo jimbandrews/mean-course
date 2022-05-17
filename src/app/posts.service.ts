@@ -17,6 +17,10 @@ export class PostsService {
     return [...this.posts];
   }
 
+  getPostUpdateListener() {
+    return this.postsUpdated.asObservable();
+  }
+
   addPost(title: string, content: string) {
     const post: Post = {title: title, content: content};
     this.posts.push(post)

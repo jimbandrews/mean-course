@@ -48,7 +48,7 @@ app.post("/api/posts", (req, res, next) => {
 
 // the new first arg is the path that we have to send a request to
 // we can call either app.use or app.get here
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
   Post.find()
     .then(documents => {
       res.status(200).json({
@@ -56,6 +56,13 @@ app.use('/api/posts', (req, res, next) => {
         posts: documents
       });
     });
+});
+
+app.delete("/api/posts/:id", (req, res, next) => {
+  Post.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({message: "Post deleted!"});
+  });
 });
 
 module.exports = app;

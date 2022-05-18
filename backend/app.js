@@ -3,11 +3,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+// sets up and configures .env file for use with process.env
+require('dotenv').config()
+
 const Post = require('./models/post')
 
 const app = express();
 
-mongoose.connect("mongodb+srv://james:" + "<password>" + "@cluster0.mibe7.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect(process.env.DB_CONNECT)
   .then(() => {
     console.log('Connected to database!')
   })

@@ -1,8 +1,19 @@
 // This file will hold the express app and all its features
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Post = require('./models/post')
 
 const app = express();
+
+mongoose.connect("mongodb+srv://james:" + "<password>" + "@cluster0.mibe7.mongodb.net/?retryWrites=true&w=majority")
+  .then(() => {
+    console.log('Connected to database!')
+  })
+  .catch(() => {
+    console.log('Connection failed!')
+  });
 
 // extracts data from the body of the http request
 app.use(bodyParser.json());
@@ -22,7 +33,10 @@ app.use((req, res, next) => {
 
 // handles post requests for the /api/posts endpoint
 app.post("/api/posts", (req, res, next) => {
-  const post = req.body;
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
   console.log(post);
   res.status(201).json({
     message: "Post added successfully!"

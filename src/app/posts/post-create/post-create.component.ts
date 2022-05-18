@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PostsService } from 'src/app/posts.service';
+import { Post } from '../post.model';
 
 // this decorator turns the class below into something that Angular understands
 // selector creates the html tag that you will use for this component
@@ -12,13 +14,26 @@ import { PostsService } from 'src/app/posts.service';
 })
 
 // Creating component class
-export class PostCreateComponent {
+export class PostCreateComponent implements OnInit {
   enteredContent = '';
   enteredTitle = '';
+  private mode = 'create';
+  private postId: string
+  private post: Post
 
-  constructor(public postsService: PostsService) {}
+  constructor(public postsService: PostsService, public route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('postId')) {
+        this.mode = 'edit';
+        this.postId = paramMap.get('postId');
+        this.post = this.postsService.getPost(this.postId);
+      } else {
+        this.mode = 'create';
+        this.postId = null
+      }
+    });
   }
 
   onAddPost(form: NgForm) {

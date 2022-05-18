@@ -19,7 +19,7 @@ export class PostCreateComponent implements OnInit {
   enteredTitle = '';
   private mode = 'create';
   private postId: string
-  private post: Post
+  post: Post
 
   constructor(public postsService: PostsService, public route: ActivatedRoute) {}
 

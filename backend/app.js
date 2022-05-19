@@ -48,6 +48,18 @@ app.post("/api/posts", (req, res, next) => {
   });
 });
 
+app.put('api/posts/:id', (req, res, next) => {
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content
+  });
+  Post.updateOne({_id: req.params.id}, post)
+    .then(result => {
+      console.log(result);
+      res.status(200).json({message: "Update successful!"})
+    });
+});
+
 // the new first arg is the path that we have to send a request to
 // we can call either app.use or app.get here
 app.get('/api/posts', (req, res, next) => {

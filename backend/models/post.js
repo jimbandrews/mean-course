@@ -5,4 +5,5 @@ const postSchema = mongoose.Schema({
   content: {type: String, required: true}
 });
 
+// Model is created and exported.
 module.exports = mongoose.model('Post', postSchema);

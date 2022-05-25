@@ -10,7 +10,8 @@ const Post = require('./models/post')
 
 const app = express();
 
-mongoose.connect(process.env.DB_CONNECT)
+mongoose.connect("mongodb://127.0.0.1:27017/mean-tutorial")
+// mongoose.connect(process.env.DB_CONNECT)
   .then(() => {
     console.log('Connected to database!')
   })
@@ -29,13 +30,14 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
 
 // handles post requests for the /api/posts endpoint
 app.post("/api/posts", (req, res, next) => {
+  console.log(req.body);
   const post = new Post({
     title: req.body.title,
     content: req.body.content
@@ -50,6 +52,7 @@ app.post("/api/posts", (req, res, next) => {
 
 app.put('api/posts/:id', (req, res, next) => {
   const post = new Post({
+    _id: req.body.id,
     title: req.body.title,
     content: req.body.content
   });
@@ -71,6 +74,16 @@ app.get('/api/posts', (req, res, next) => {
       });
     });
 });
+
+app.get("/api/posts/:id", (req, res, next) => {
+  Post.findById(req.params.id).then(post => {
+    if (post) {
+      res.status(200).json(post);
+    } else {
+      res.status(404).json({message: 'Post not found!'});
+    }
+  });
+})
 
 app.delete("/api/posts/:id", (req, res, next) => {
   Post.deleteOne({_id: req.params.id}).then(result => {
